@@ -12,12 +12,11 @@ import org.springframework.util.CollectionUtils;
 import com.hd.framework.mapper.StorageMapper;
 import com.hd.framework.mapper.StorageRackMapper;
 import com.hd.framework.model.BasePage;
-import com.hd.framework.model.product.in.ProductPageEt;
-import com.hd.framework.model.product.out.ProductRt;
 import com.hd.framework.model.storage.in.StorageAndRackEt;
 import com.hd.framework.model.storage.in.StorageEt;
 import com.hd.framework.model.storage.in.StoragePageEt;
 import com.hd.framework.model.storage.in.StorageRackEt;
+import com.hd.framework.model.storage.out.StorageProductRt;
 import com.hd.framework.utils.PageUtil;
 
 @Service
@@ -67,15 +66,15 @@ public class StorageService {
 	public BasePage page(StoragePageEt storagePageEt) {
 		storagePageEt.plusLike();
 		BasePage basePage = new BasePage();
-		int total = productMapper.pageCount(productPageEt);
+		int total = storageMapper.pageCount(storagePageEt);
 		if (total == 0) {
 			return basePage;
 		}
-		basePage.pageIndex = productPageEt.pageIndex;
+		basePage.pageIndex = storagePageEt.pageIndex;
 		basePage.totalCount = total;
-		basePage.totalPage = PageUtil.totalPage(total, productPageEt.pageSize);
+		basePage.totalPage = PageUtil.totalPage(total, storagePageEt.pageSize);
 
-		List<ProductRt> beans = productMapper.page(productPageEt);
+		List<StorageProductRt> beans = storageMapper.page(storagePageEt);
 		basePage.list.addAll(beans);
 		return basePage;
 	}

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.hd.framework.model.storage.in.StorageEt;
 import com.hd.framework.model.storage.in.StoragePageEt;
-import com.hd.framework.model.storage.out.StorageRt;
+import com.hd.framework.model.storage.out.StorageProductRt;
 
 @Repository
 public interface StorageMapper {
@@ -25,7 +25,8 @@ public interface StorageMapper {
 
 	// 分页总条数
 	int pageCount(StoragePageEt storagePageEt);
+
 	// 分页
-	List<StorageRt> page(StoragePageEt storagePageEt);
-	
+	List<StorageProductRt> page(StoragePageEt storagePageEt);
+
 }

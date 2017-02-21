@@ -52,7 +52,7 @@
 				product
 		]]>
 	</select>
-	<select id="page" parameterType="com.hd.framework.model.storage.in.StoragePageEt" resultType="com.hd.framework.model.storage.out.StorageRt">
+	<select id="page" parameterType="com.hd.framework.model.storage.in.StoragePageEt" resultType="com.hd.framework.model.storage.out.StorageProductRt">
 		<![CDATA[
 			SELECT 
 				*
