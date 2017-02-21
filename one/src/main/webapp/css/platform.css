@@ -1,0 +1,49 @@
+.main .main-right .mr-top{
+	height:50px;
+	width:100%;
+	line-height:35px;
+	padding-top:8px;
+}
+
+.main .main-right .mr-top .btn{
+	margin-left:10px;
+}
+
+.main .main-right .mr-tool{
+	height:40px;
+	width:100%;
+	line-height:35px;
+}
+
+.main .main-right .mr-table .right-table{
+	width:98%;
+	border-collapse: collapse!important;
+}
+
+.main .main-right .mr-table .right-table th{
+	border:1px solid #e7eaec;
+	height:30px;
+	padding:0;
+	margin:0;
+}
+
+.main .main-right .mr-table .right-table td{
+	border:1px solid #e7eaec;
+	height:30px;
+	text-align:center;
+	padding:0;
+	margin:0;
+}
+
+
+.main .main-right .mr-page{
+	padding-top:10px;
+	height:50px;
+	width:100%;
+	text-align:center;
+}
+
+.main .main-right .mr-page .p-left{
+	height:100%;
+	float:left;
+}

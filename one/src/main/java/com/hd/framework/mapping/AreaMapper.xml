@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hd.framework.mapper.AreaMapper">
+	<insert id="insert" parameterType="com.hd.framework.model.area.in.AreaEt">
+		<![CDATA[
+			INSERT INTO 
+				area (
+					num,
+					name,
+					remark,
+					update_time,
+					create_time
+				)
+			VALUES
+				(#{num},#{name},#{remark},now(),now())
+		]]>
+	</insert>
+	
+	<select id="selectOneById" parameterType="int" resultType="com.hd.framework.model.area.out.AreaRt">
+		<![CDATA[
+			SELECT 
+				*
+			FROM
+				area
+			WHERE 
+				id = #{id}
+		]]>
+	</select>
+	
+	<!-- 分页 -->
+	<select id="pageCount" parameterType="com.hd.framework.model.area.in.AreaPageEt" resultType="int">
+		<![CDATA[
+			SELECT 
+				count(*)
+			FROM
+				area
+		]]>
+	</select>
+	<select id="page" parameterType="com.hd.framework.model.area.in.AreaPageEt" resultType="com.hd.framework.model.area.out.AreaRt">
+		<![CDATA[
+			SELECT 
+				*
+			FROM
+				area
+			LIMIT
+				${(pageIndex-1)*pageSize},#{pageSize}
+		]]>
+	</select>
+	
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hd.framework.mapper.UserMapper">
+	<insert id="insert" parameterType="com.hd.framework.model.user.in.UserEt">
+		<![CDATA[
+			INSERT INTO 
+				user (
+					username,
+					password,
+					role,
+					mobile,
+					sex,
+					update_time,
+					create_time
+				)
+			VALUES
+				(#{username},#{password},#{role},#{mobile},#{sex},now(),now())
+		]]>
+	</insert>
+	
+	<select id="selectOneById" parameterType="int" resultType="com.hd.framework.model.user.out.UserRt">
+		<![CDATA[
+			SELECT 
+				*
+			FROM
+				user
+			WHERE 
+				id = #{id}
+		]]>
+	</select>
+	
+	<select id="selectOneByUsername" parameterType="string" resultType="com.hd.framework.model.user.out.UserRt">
+		<![CDATA[
+			SELECT 
+				*
+			FROM
+				user
+			WHERE 
+				username like #{username}
+		]]>
+	</select>
+	
+</mapper>

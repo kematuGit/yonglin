@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> - 登录</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+	<link href="/css/bd.css" rel="stylesheet">
+    <link href="/css/login.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+</head>
+
+<body class="gray-bg">
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
+                <h1 class="logo-name">HD</h1>
+            </div>
+            <h3>欢迎使用 Dream boat</h3>
+
+            <form action="/user/platform.php">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="username" placeholder="用户名" />
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" placeholder="密码" />
+                </div>
+                <div class="form-group" id="showMessage">
+                	<label class="_message">账号或密码错误！</label>
+                </div>
+                <button type="button" id="loginBtn" class="btn btn-primary block full-width m-b">登 录</button>
+
+                <p class="text-muted text-center"> <a href="login.html#"><small>忘记密码了？</small></a> | <a href="register.html">注册一个新账号</a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#loginBtn").click(function(){
+				var _username = $("#username").val();
+				var _password = $("#password").val();
+				var params = {"username":_username,"password":_password};
+				$.ajax({
+					url:"/login.do",
+					type:"post",
+					async:false,
+					dataType:"json",
+					data:JSON.stringify(params),   
+				    contentType: "application/json; charset=utf-8",
+					success:function(data){
+						if(data.success){
+							location.href = "/user/platform.php";
+						}else{
+							$("#showMessage>label").html(data.errorMap.login);
+							$("#showMessage").show();
+						}
+					}
+				});
+			});
+			
+			$("#username").blur(function(){
+				$("#showMessage").hide();
+			});
+			$("#password").blur(function(){
+				$("#showMessage").hide();
+			});
+			
+		});
+	</script>
+</body>
+
+</html>

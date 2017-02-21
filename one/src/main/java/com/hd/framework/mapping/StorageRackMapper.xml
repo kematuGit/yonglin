@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hd.framework.mapper.StorageRackMapper">
+	<insert id="insert" parameterType="com.hd.framework.model.storage.in.StorageRackEt">
+		<![CDATA[
+			INSERT INTO 
+				storage_rack (
+					storage_id,
+					area_id,
+					row,
+					column,
+					put_num,
+					remark,
+					update_time,
+					create_time
+				)
+			VALUES
+				(
+				#{storageId},
+				#{areaId},
+				#{row},
+				#{column},
+				#{putNum},
+				#{remark},
+				now(),now())
+		]]>
+	</insert>
+	
+	<select id="selectOneById" parameterType="int" resultType="com.hd.framework.model.storage.out.StorageRackRt">
+		<![CDATA[
+			SELECT 
+				*
+			FROM
+				storage_rack
+			WHERE 
+				id = #{id}
+		]]>
+	</select>
+	
+	<!-- 分页 -->
+	<select id="pageCount" parameterType="com.hd.framework.model.storage.in.StorageRackPageEt" resultType="int">
+		<![CDATA[
+			SELECT 
+				count(*)
+			FROM
+				storage_rack
+		]]>
+	</select>
+	<select id="page" parameterType="com.hd.framework.model.storage.in.StorageRackPageEt" resultType="com.hd.framework.model.storage.out.StorageRackRt">
+		<![CDATA[
+			SELECT 
+				*
+			FROM
+				storage_rack
+			LIMIT
+				${(pageIndex-1)*pageSize},#{pageSize}
+		]]>
+	</select>
+	
+</mapper>
