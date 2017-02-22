@@ -15,7 +15,6 @@ import com.hd.framework.model.BasePage;
 import com.hd.framework.model.common.EntryMap;
 import com.hd.framework.model.common.ResultMap;
 import com.hd.framework.model.common.ResultMap.ExcuteResult;
-import com.hd.framework.model.product.in.ProductPageEt;
 import com.hd.framework.model.storage.in.StorageAndRackEt;
 import com.hd.framework.model.storage.in.StoragePageEt;
 import com.hd.framework.service.StorageService;
@@ -86,7 +85,7 @@ public class InStorageController {
 		storagePageEt.storageType = Constants.STORAGE_TYPE_ONE;
 		return storageService.page(storagePageEt);
 	}
-	
+
 	// 详情
 	@RequestMapping(value = "/detail.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public @ResponseBody Object detail(@RequestBody EntryMap.Id model) {
