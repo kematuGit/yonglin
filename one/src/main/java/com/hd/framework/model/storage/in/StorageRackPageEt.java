@@ -1,7 +1,7 @@
 package com.hd.framework.model.storage.in;
 
-import com.hd.framework.model.BasePage;
+import com.hd.framework.model.PageQuery;
 
-public class StorageRackPageEt extends BasePage{
+public class StorageRackPageEt extends PageQuery {
 
 }

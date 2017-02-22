@@ -14,7 +14,7 @@ public class ProductPageEt extends PageQuery {
 
 	// 产品图号
 	public String picNum;
-
+	
 	public void plusLike() {
 		if (!StringUtils.isEmpty(materialNum)) {
 			this.materialNum = this.materialNum + "%";

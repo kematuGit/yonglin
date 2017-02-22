@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hd.framework.common.Constants;
+import com.hd.framework.model.BasePage;
+import com.hd.framework.model.common.EntryMap;
 import com.hd.framework.model.common.ResultMap;
 import com.hd.framework.model.common.ResultMap.ExcuteResult;
 import com.hd.framework.model.storage.in.StorageAndRackEt;
+import com.hd.framework.model.storage.in.StoragePageEt;
 import com.hd.framework.service.StorageService;
 
 /**
@@ -26,7 +29,7 @@ public class OutStorageController {
 
 	@Resource
 	private StorageService storageService;
-	
+
 	@RequestMapping("/list.php") // 入库列表
 	public String center() {
 		return "/storage/out/list";
@@ -59,4 +62,40 @@ public class OutStorageController {
 		return excuteResult;
 	}
 
+	// 删除
+	@RequestMapping(value = "/del.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody ResultMap.ExcuteResult add(@RequestBody EntryMap.Id model) {
+		ResultMap.ExcuteResult excuteResult = new ExcuteResult();
+		Map<String, Object> message = model.valite();
+		if (!message.isEmpty()) {
+			excuteResult.success = false;
+			excuteResult.errorMap = message;
+			return excuteResult;
+		}
+		boolean result = storageService.delete(model.id);
+		if (result) {
+			excuteResult.success = true;
+		}
+		return excuteResult;
+	}
+
+	// 分页查询
+	@RequestMapping(value = "/page.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody BasePage page(@RequestBody StoragePageEt storagePageEt) {
+		storagePageEt.storageType = Constants.STORAGE_TYPE_TWO;
+		return storageService.page(storagePageEt);
+	}
+
+	// 详情
+	@RequestMapping(value = "/detail.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public @ResponseBody Object detail(@RequestBody EntryMap.Id model) {
+		ResultMap.ExcuteResult excuteResult = new ExcuteResult();
+		Map<String, Object> message = model.valite();
+		if (!message.isEmpty()) {
+			excuteResult.success = false;
+			excuteResult.errorMap = message;
+			return excuteResult;
+		}
+		return storageService.detail(model.id);
+	}
 }

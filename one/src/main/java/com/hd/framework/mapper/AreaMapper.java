@@ -21,7 +21,7 @@ public interface AreaMapper {
 	int deleteById(int id);
 
 	// 根据ID查询
-	AreaRt selectOneById(String id);
+	AreaRt selectOneById(int id);
 
 	// 分页总条数
 	int pageCount(AreaPageEt areaPageEt);

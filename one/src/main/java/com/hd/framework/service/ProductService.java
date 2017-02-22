@@ -74,6 +74,9 @@ public class ProductService {
 		return basePage;
 	}
 	
-	
+	// 根据 ID 查询
+	public ProductRt selectOneById(int id){
+		return productMapper.selectOneById(id);
+	}
 
 }

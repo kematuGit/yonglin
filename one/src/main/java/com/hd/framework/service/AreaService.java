@@ -71,5 +71,10 @@ public class AreaService {
 		basePage.list.addAll(beans);
 		return basePage;
 	}
+	
+	// 根据ID查询
+	public AreaRt selectOneById(int id){
+		return areaMapper.selectOneById(id);
+	}
 
 }
