@@ -23,7 +23,7 @@ public class ProductEt extends BaseModel {
 
 	// 产品图号
 	public String picNum;
-
+	
 	public String remark;
 
 	public Map<String, Object> valite() {

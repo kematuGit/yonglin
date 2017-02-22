@@ -31,8 +31,9 @@
 				now(),now())
 		]]>
 	</insert>
-	
-	<select id="selectOneById" parameterType="int" resultType="com.hd.framework.model.storage.out.StorageRt">
+
+	<select id="selectOneById" parameterType="int"
+		resultType="com.hd.framework.model.storage.out.StorageRt">
 		<![CDATA[
 			SELECT 
 				*
@@ -42,25 +43,50 @@
 				id = #{id}
 		]]>
 	</select>
-	
+
 	<!-- 分页 -->
-	<select id="pageCount" parameterType="com.hd.framework.model.storage.in.StoragePageEt" resultType="int">
+	<sql id="pageWhere">
 		<![CDATA[
-			SELECT 
-				count(*)
-			FROM
-				product
+			WHER
+				a.storage_type = #{storageType}	
+			AND 
+				a.product_id = p.id
 		]]>
-	</select>
-	<select id="page" parameterType="com.hd.framework.model.storage.in.StoragePageEt" resultType="com.hd.framework.model.storage.out.StorageProductRt">
+	</sql>
+	<select id="pageCount" parameterType="com.hd.framework.model.storage.in.StoragePageEt"
+		resultType="int">
 		<![CDATA[
 			SELECT 
-				*
+				count(s.id)
 			FROM
-				product
+				storage as a,product as p
+		]]>
+		<include refid="pageWhere" />
+	</select>
+	<select id="page" parameterType="com.hd.framework.model.storage.in.StoragePageEt"
+		resultType="com.hd.framework.model.storage.out.StorageProductRt">
+		<![CDATA[
+			SELECT 
+				s.order_num,
+				s.excute_time,
+				p.name as proName,
+				p.pic_num as proPicNum,
+				p.material_num as proMaterialNum,
+				s.material_report_num,
+				s.production_batch,
+				s.contact_num,
+				s.storage_num,
+				s.remark
+			FROM
+				storage as s,product as p
+		]]>
+		<include refid="pageWhere" />
+		<![CDATA[
+			ORDER BY
+				s.create_time DESC
 			LIMIT
 				${(pageIndex-1)*pageSize},#{pageSize}
 		]]>
 	</select>
-	
+
 </mapper>

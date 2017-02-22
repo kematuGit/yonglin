@@ -16,5 +16,5 @@ public class ProductRt {
 	public String picNum;
 
 	public String remark;
-	
+
 }
