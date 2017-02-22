@@ -1,5 +1,7 @@
 package com.hd.framework.model.storage.in;
 
+import org.springframework.util.StringUtils;
+
 import com.hd.framework.model.PageQuery;
 
 /**
@@ -36,7 +38,24 @@ public class StoragePageEt extends PageQuery {
 	public int storageType;
 
 	public void plusLike() {
-		// TODO
+		if (!StringUtils.isEmpty(orderNum)) {
+			this.orderNum = this.orderNum + "%";
+		}
+		if (!StringUtils.isEmpty(productName)) {
+			this.productName = "%" + this.productName + "%";
+		}
+		if (!StringUtils.isEmpty(proPicNum)) {
+			this.proPicNum = this.proPicNum + "%";
+		}
+		if (!StringUtils.isEmpty(proMaterialNum)) {
+			this.proMaterialNum = this.proMaterialNum + "%";
+		}
+		if (!StringUtils.isEmpty(proMaterialReportNum)) {
+			this.proMaterialReportNum = this.proMaterialReportNum + "%";
+		}
+		if (!StringUtils.isEmpty(productionBatch)) {
+			this.productionBatch = this.productionBatch + "%";
+		}
 	}
 
 }

@@ -52,6 +52,46 @@
 			AND 
 				a.product_id = p.id
 		]]>
+		<if test="orderNum!=null and orderNum!=''">
+		<![CDATA[			
+			AND a.order_num like #{orderNum}
+		]]>
+		</if>
+		<if test="productName!=null and productName!=''">
+		<![CDATA[			
+			AND p.name like #{productName}
+		]]>
+		</if>
+		<if test="proPicNum!=null and proPicNum!=''">
+		<![CDATA[			
+			AND p.pic_name like #{proPicNum}
+		]]>
+		</if>
+		<if test="proMaterialNum!=null and proMaterialNum!=''">
+		<![CDATA[			
+			AND p.material_num like #{proMaterialNum}
+		]]>
+		</if>
+		<if test="proMaterialReportNum!=null and proMaterialReportNum!=''">
+		<![CDATA[			
+			AND p.material_report_num like #{proMaterialReportNum}
+		]]>
+		</if>
+		<if test="productionBatch!=null and productionBatch!=''">
+		<![CDATA[			
+			AND p.production_batch like #{productionBatch}
+		]]>
+		</if>
+		<if test="startTime!=null and startTime!=''">
+		<![CDATA[			
+			AND s.excute_time >= #{startTime}
+		]]>
+		</if>
+		<if test="endTime!=null and endTime!=''">
+		<![CDATA[			
+			AND s.excute_time <= #{endTime}
+		]]>
+		</if>
 	</sql>
 	<select id="pageCount" parameterType="com.hd.framework.model.storage.in.StoragePageEt"
 		resultType="int">
@@ -80,7 +120,7 @@
 			FROM
 				storage as s,product as p
 		]]>
-		<include refid="pageWhere" />
+		<include refid="pageWhere"/>
 		<![CDATA[
 			ORDER BY
 				s.create_time DESC
