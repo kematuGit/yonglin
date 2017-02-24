@@ -1,5 +1,6 @@
 package com.hd.framework.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import com.hd.framework.common.Constants;
 import com.hd.framework.mapper.StorageMapper;
 import com.hd.framework.mapper.StorageRackMapper;
 import com.hd.framework.model.BasePage;
@@ -18,7 +20,9 @@ import com.hd.framework.model.storage.in.StorageEt;
 import com.hd.framework.model.storage.in.StoragePageEt;
 import com.hd.framework.model.storage.in.StorageRackEt;
 import com.hd.framework.model.storage.in.StorageRackPageEt;
+import com.hd.framework.model.storage.out.StorageCountRt;
 import com.hd.framework.model.storage.out.StorageDetailRt;
+import com.hd.framework.model.storage.out.StorageFindRt;
 import com.hd.framework.model.storage.out.StorageProductRt;
 import com.hd.framework.model.storage.out.StorageRackRt;
 import com.hd.framework.model.storage.out.StorageRt;
@@ -96,7 +100,46 @@ public class StorageService {
 		basePage.list.addAll(beans);
 		return basePage;
 	}
-	
+
+	// 库存查询
+	public BasePage pageFind(StoragePageEt storagePageEt) {
+		storagePageEt.plusLike();
+		BasePage basePage = new BasePage();
+		int total = storageMapper.pageFindCount(storagePageEt);
+		if (total == 0) {
+			return basePage;
+		}
+		basePage.pageIndex = storagePageEt.pageIndex;
+		basePage.totalCount = total;
+		basePage.totalPage = PageUtil.totalPage(total, storagePageEt.pageSize);
+
+		List<StorageFindRt> beans = storageMapper.pageFind(storagePageEt);
+		List<Integer> ids = new ArrayList<Integer>();
+		for (StorageFindRt rt : beans) {
+			ids.add(rt.id);
+		}
+		if (!CollectionUtils.isEmpty(ids)) {
+			List<StorageCountRt> counts = storageMapper.selectCount(storagePageEt);
+			for (StorageFindRt bean : beans) {
+				for (StorageCountRt count : counts) {
+					if (bean.materialReportNum.equals(count.materialReportNum)
+							&& bean.productionBatch.equals(count.productionBatch)) {
+						if(count.storageType == Constants.STORAGE_TYPE_ONE){
+							bean.inStorageCount = count.storageCount;
+						}else if(count.storageType == Constants.STORAGE_TYPE_TWO){
+							bean.outStorageCount = count.storageCount;
+						}else if(count.storageType == Constants.STORAGE_TYPE_THREE){
+							bean.checkStorageCount = count.storageCount;
+						}
+					}
+				}
+			}
+
+		}
+		basePage.list.addAll(beans);
+		return null;
+	}
+
 	// 货架分页
 	public BasePage page(StorageRackPageEt storageRackPageEt) {
 		BasePage basePage = new BasePage();

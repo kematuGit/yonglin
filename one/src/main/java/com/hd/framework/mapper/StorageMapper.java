@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import com.hd.framework.model.storage.in.StorageEt;
 import com.hd.framework.model.storage.in.StoragePageEt;
+import com.hd.framework.model.storage.out.StorageCountRt;
+import com.hd.framework.model.storage.out.StorageFindRt;
 import com.hd.framework.model.storage.out.StorageProductRt;
 import com.hd.framework.model.storage.out.StorageRt;
 
@@ -29,5 +31,14 @@ public interface StorageMapper {
 
 	// 分页
 	List<StorageProductRt> page(StoragePageEt storagePageEt);
+
+	// 库存查询（分页总条数）
+	int pageFindCount(StoragePageEt storagePageEt);
+
+	// 分页
+	List<StorageFindRt> pageFind(StoragePageEt storagePageEt);
+
+	// 统计 根据和材料报告编号查询 入库 出库 盘点
+	List<StorageCountRt> selectCount(StoragePageEt storagePageEt);
 
 }

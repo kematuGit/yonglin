@@ -48,13 +48,13 @@
 	<sql id="pageWhere">
 		<![CDATA[
 			WHER
-				a.storage_type = #{storageType}	
+				s.storage_type = #{storageType}	
 			AND 
-				a.product_id = p.id
+				s.product_id = p.id
 		]]>
 		<if test="orderNum!=null and orderNum!=''">
 		<![CDATA[			
-			AND a.order_num like #{orderNum}
+			AND s.order_num like #{orderNum}
 		]]>
 		</if>
 		<if test="productName!=null and productName!=''">
@@ -72,9 +72,9 @@
 			AND p.material_num like #{proMaterialNum}
 		]]>
 		</if>
-		<if test="proMaterialReportNum!=null and proMaterialReportNum!=''">
+		<if test="materialReportNum!=null and materialReportNum!=''">
 		<![CDATA[			
-			AND p.material_report_num like #{proMaterialReportNum}
+			AND p.material_report_num like #{materialReportNum}
 		]]>
 		</if>
 		<if test="productionBatch!=null and productionBatch!=''">
@@ -99,7 +99,7 @@
 			SELECT 
 				count(s.id)
 			FROM
-				storage as a,product as p
+				storage as s,product as p
 		]]>
 		<include refid="pageWhere" />
 	</select>
@@ -129,4 +129,111 @@
 		]]>
 	</select>
 
+
+	<!-- 库存查询 -->
+	<sql id="pageFindWhere">
+		<if test="orderNum!=null and orderNum!=''">
+		<![CDATA[			
+			AND s.order_num like #{orderNum}
+		]]>
+		</if>
+		<if test="productName!=null and productName!=''">
+		<![CDATA[			
+			AND p.name like #{productName}
+		]]>
+		</if>
+		<if test="proPicNum!=null and proPicNum!=''">
+		<![CDATA[			
+			AND p.pic_name like #{proPicNum}
+		]]>
+		</if>
+		<if test="proMaterialNum!=null and proMaterialNum!=''">
+		<![CDATA[			
+			AND p.material_num like #{proMaterialNum}
+		]]>
+		</if>
+		<if test="materialReportNum!=null and materialReportNum!=''">
+		<![CDATA[			
+			AND p.material_report_num like #{materialReportNum}
+		]]>
+		</if>
+		<if test="productionBatch!=null and productionBatch!=''">
+		<![CDATA[			
+			AND p.production_batch like #{productionBatch}
+		]]>
+		</if>
+		<if test="startTime!=null and startTime!=''">
+		<![CDATA[			
+			AND s.excute_time >= #{startTime}
+		]]>
+		</if>
+		<if test="endTime!=null and endTime!=''">
+		<![CDATA[			
+			AND s.excute_time <= #{endTime}
+		]]>
+		</if>
+	</sql>
+	<select id="pageFindCount" parameterType="com.hd.framework.model.storage.in.StoragePageEt"
+		resultType="int">
+		<![CDATA[
+			SELECT COUNT(A.*)
+			FROM (
+			SELECT 
+				s.production_batch,s.material_report_num
+			FROM
+				storage as s,product as p
+			WHERE
+				s.product_id = p.id
+		]]>
+		<include refid="pageFindWhere" />
+		<![CDATA[
+			GROUP BY
+				s.production_batch,s.material_report_num
+			) as A
+		]]>		
+	</select>
+	<select id="pageFind" parameterType="com.hd.framework.model.storage.in.StoragePageEt"
+		resultType="com.hd.framework.model.storage.out.StorageFindRt">
+		<![CDATA[
+			SELECT 
+				s.order_num,
+				s.excute_time,
+				p.name as proName,
+				p.pic_num as proPicNum,
+				p.material_num as proMaterialNum,
+				s.material_report_num,
+				s.production_batch,
+				s.contact_num,
+				s.storage_num,
+				s.remark
+			FROM
+				storage as s,product as p
+			WHERE
+				s.product_id = p.id
+			]]>
+			<include refid="pageFindWhere" />
+			<![CDATA[
+			GROUP BY
+				s.production_batch,s.material_report_num
+			LIMIT
+				${(pageIndex-1)*pageSize},#{pageSize}
+		]]>		
+	</select>
+	
+	<select id="selectCount" parameterType="com.hd.framework.model.storage.in.StoragePageEt"
+		resultType="com.hd.framework.model.storage.out.StorageCountRt">
+		<![CDATA[
+			SELECT 
+				s.production_batch,s.material_report_num,sum(storage_num) as storageCount,s.storage_type
+			FROM
+				storage as s,product as p
+			WHERE
+				s.product_id = p.id
+		]]>
+		<include refid="pageFindWhere" />
+		<![CDATA[
+			GROUP BY
+				s.production_batch,s.material_report_num,s.storage_type
+		]]>		
+	</select>
 </mapper>

@@ -23,7 +23,7 @@ public class StoragePageEt extends PageQuery {
 	public String proMaterialNum;
 
 	// 材料报告编号
-	public String proMaterialReportNum;
+	public String materialReportNum;
 
 	// 生产批次
 	public String productionBatch;
@@ -50,8 +50,8 @@ public class StoragePageEt extends PageQuery {
 		if (!StringUtils.isEmpty(proMaterialNum)) {
 			this.proMaterialNum = this.proMaterialNum + "%";
 		}
-		if (!StringUtils.isEmpty(proMaterialReportNum)) {
-			this.proMaterialReportNum = this.proMaterialReportNum + "%";
+		if (!StringUtils.isEmpty(materialReportNum)) {
+			this.materialReportNum = this.materialReportNum + "%";
 		}
 		if (!StringUtils.isEmpty(productionBatch)) {
 			this.productionBatch = this.productionBatch + "%";

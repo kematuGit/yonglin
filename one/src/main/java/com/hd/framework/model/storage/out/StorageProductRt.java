@@ -4,6 +4,9 @@ import java.util.Date;
 
 public class StorageProductRt {
 
+	// ID
+	public int id;
+	
 	// (入库，出库，盘点)单号
 	public String orderNum;
 
@@ -37,12 +40,4 @@ public class StorageProductRt {
 	// 备注
 	public String remark;
 	
-	// 入库数量
-	public int inStorageCount;
-
-	// 出库数量
-	public int outStorageCount;
-
-	// 盘点数量
-	public int checkStorageCount;
 }
