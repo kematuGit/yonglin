@@ -93,7 +93,7 @@ public class ExportExcelController {
 	/**
 	 * 导出查询的数据
 	 */
-	@RequestMapping(value = "check-storage.php", method = RequestMethod.POST)
+	@RequestMapping(value = "select-storage.php", method = RequestMethod.POST)
 	public void exportFind(final HttpServletResponse response, @RequestParam("ids") String[] ids) {
 		// List<String> ids = Arrays.asList(refIds);
 		ExportExcelUtil.setResponse(response, "学生名单");
